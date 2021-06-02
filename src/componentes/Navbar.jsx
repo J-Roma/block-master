@@ -1,11 +1,18 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
+
+const Icon = styled.div`
+    color: #FED941;
+`
 
 const Navbar = () => {
     return (
         <div className="d-flex justify-content-center">
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="container-fluid">
-                    <a className="navbar-brand fs-3">LOGO</a>
+                    <a className="navbar-brand fs-3"><img src="https://i.imgur.com/gw0bEG7.png" alt="LOGO" /></a>
 
                     <div className="collapse navbar-collapse fs-5 ms-5" id="navbarNav">
                         <ul className="navbar-nav">
@@ -13,10 +20,14 @@ const Navbar = () => {
                                 <a className="nav-link active" aria-current="page">Todas</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link">Mas Valoradas</a>
+                                <a className="nav-link">
+                                    Mas Valoradas
+                                </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link">Menos Valoradas</a>
+                                <a className="nav-link">
+                                    Menos Valoradas
+                                </a>
                             </li>
                         </ul>
                         <form className="d-flex ms-5">
@@ -25,6 +36,7 @@ const Navbar = () => {
                             <button className="btn btn-warning" type="submit">Search</button>
                             </div>
                         </form>
+                        <Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon>
       
                     </div>
                 </div>

@@ -1,4 +1,12 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faPlay } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
+
+const Icon = styled.div`
+    color: #FED941;
+    font-size: 15px;
+`
 
 const Slider = () => {
     return (
@@ -14,7 +22,8 @@ const Slider = () => {
                         <img src="https://i.imgur.com/3iZc07Z.png" class="d-block w-100" alt="..." />
                         <div class="container">
                             <div class="carousel-caption text-start">
-                            <p><a class="btn btn-lg btn-warning" href="#">VER AHORA</a> <a class="btn btn-lg btn-outline-warning bg-dark" href="#">VER DESPUES</a></p>
+                            <p><a class="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} />VER AHORA</a>
+                             <a class="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlus} />VER DESPUES</a></p>
                             </div>
                         </div>
                     </div>
@@ -22,7 +31,8 @@ const Slider = () => {
                         <img src="https://i.imgur.com/RGyjnLe.png" class="d-block w-100" alt="..." />
                         <div class="container">
                             <div class="carousel-caption text-start">
-                            <p><a class="btn btn-lg btn-warning" href="#">VER AHORA</a> <a class="btn btn-lg btn-outline-warning bg-dark" href="#">VER DESPUES</a></p>
+                            <p><a class="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</a>
+                             <a class="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlus} />VER DESPUES</a></p>
                             </div>
                         </div>
                     </div>
@@ -31,7 +41,8 @@ const Slider = () => {
 
                         <div class="container">
                             <div class="carousel-caption text-start">
-                                <p><a class="btn btn-lg btn-warning" href="#">VER AHORA</a> <a class="btn btn-lg btn-outline-warning bg-dark" href="#">VER DESPUES</a></p>
+                                <p><a class="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</a>
+                                 <a class="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} />VER DESPUES</a></p>
                             </div>
                         </div>
                     </div>
