@@ -1,58 +1,65 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle, faPlus, faPlay } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import {faGoogle} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { startGoogleAuth } from '../actions/auth';
+
+
+const Container = styled.div`
+	max-width: 600px;
+	margin: 0 auto;
+`
 
 const Login = () => {
-    return (
-        <div>
-<div className="container">
-	<div className="d-flex justify-content-center h-100">
-		<div className="card">
-			<div className="card-header">
-				<h3>Sign In</h3>
-				<div className="d-flex justify-content-end social_icon">
-					<span><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></span>
-					<span><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></span>
-					<span><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></span>
+
+	const dispatch = useDispatch();
+	
+	const handleGoogleAuth = () => {
+		//e.preventDefault();
+		console.log(startGoogleAuth);
+		dispatch(startGoogleAuth);
+	}
+
+	return (
+		<Container>
+			<div className="card text-center mt-5">
+				<div className="card-header">
+					<ul className="nav nav-tabs card-header-tabs">
+						<li className="nav-item">
+							<div className="nav-link active" aria-current="true">Iniciar Sesion</div>
+						</li>
+						<li className="nav-item">
+							<Link to="/register" className="nav-link" href="#">Registrarse</Link>
+						</li>
+					</ul>
 				</div>
-			</div>
-			<div className="card-body">
-				<form>
-					<div className="input-group form-group">
-						<div className="input-group-prepend">
-							<span className="input-group-text"><i className="fas fa-user"></i></span>
+				<div className="card-body">
+					<form>
+						<div className="mb-3 text-start">
+							<label for="exampleInputEmail1" className="form-label" >E-Mail</label>
+							<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e-mail@gmail.com" />
+							<div id="emailHelp" className="form-text text-center">Tu e-mail es sera de uso exclusivo y privado en BlockBuster.</div>
 						</div>
-						<input type="text" className="form-control" placeholder="username"/>
-						
-					</div>
-					<div className="input-group form-group">
-						<div className="input-group-prepend">
-							<span className="input-group-text"><i className="fas fa-key"></i></span>
+						<div className="mb-1 text-start">
+							<label for="exampleInputPassword1" className="form-label">Contraseña</label>
+							<input type="password" className="form-control" id="exampleInputPassword1" />
+							<div id="passwordHelp" className="form-text text-center"></div>
+							</div>
+						<div className="form-check">
 						</div>
-						<input type="password" className="form-control" placeholder="password"/>
-					</div>
-					<div className="row align-items-center remember">
-						<input type="checkbox"/>Remember Me
-					</div>
-					<div className="form-group">
-						<input type="submit" value="Login" className="btn float-right login_btn"/>
-					</div>
-				</form>
-			</div>
-			<div className="card-footer">
-				<div className="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
-				</div>
-				<div className="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
+						<div className="d-grid gap-2 col-6 mx-auto mb-3">
+							<button className="btn btn-warning" type="button" onClick={handleGoogleAuth}><FontAwesomeIcon className="me-2" icon={faGoogle} />Iniciar Sesion con Google</button>
+						</div>
+						<div className="d-grid gap-2 col-6 mx-auto">
+							<button className="btn btn-warning" type="submit">Iniciar Sesion</button>
+						</div>
+					</form>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>            
-        </div>
-    )
+		</Container>
+	)
 }
 
 export default Login

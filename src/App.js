@@ -1,11 +1,13 @@
-import Mains from "./containers/Mains";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import Routes from "./routes/Routes";
 
 
 function App() {
   return (
-    <div className="App">
-      <Mains/>
-    </div>
+    <Provider store={store}>
+      <Routes/>
+    </Provider>
   );
 }
 

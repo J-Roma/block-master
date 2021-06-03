@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Icon = styled.div`
     color: #FED941;
@@ -12,22 +13,22 @@ const Navbar = () => {
         <div className="d-flex justify-content-center">
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="container-fluid">
-                    <a className="navbar-brand fs-3"><img src="https://i.imgur.com/gw0bEG7.png" alt="LOGO" /></a>
+                    <Link to="/" className="navbar-brand fs-3"><img src="https://i.imgur.com/gw0bEG7.png" alt="LOGO" /></Link>
 
                     <div className="collapse navbar-collapse fs-5 ms-5" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page">Todas</a>
+                                <Link to="/" className="nav-link active" aria-current="page">Todas</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link">
+                                <Link to="/top-raiting" className="nav-link">
                                     Mas Valoradas
-                                </a>
+                                </Link>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link">
+                            <li  className="nav-item">
+                                <Link to="/low-raiting" className="nav-link">
                                     Menos Valoradas
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                         <form className="d-flex ms-5">
@@ -36,7 +37,7 @@ const Navbar = () => {
                             <button className="btn btn-warning" type="submit">Search</button>
                             </div>
                         </form>
-                        <Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon>
+                        <Link to="login"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
       
                     </div>
                 </div>

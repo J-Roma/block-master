@@ -36,7 +36,7 @@ const Img = styled.img`
 `
 
 
-const ListMovies = () => {
+const DownMovies = () => {
     return (
         <div className="container-md mt-5 mb-5">       
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,13 +50,14 @@ const ListMovies = () => {
                     ...
                   </div>
                  <div className="modal-footer">
-                 {/* <a className="btn btn-lg btn-warning" href="#">VER AHORA</a>
-                 <a className="btn btn-lg btn-outline-warning bg-dark" href="#">VER DESPUES</a> */}
+                 {/* <a className="btn btn-lg btn-warning">VER AHORA</a>
+                 <a className="btn btn-lg btn-outline-warning bg-dark">VER DESPUES</a> */}
 
                  </div>
                 </div>
               </div>
             </div>
+            <h1>DownMovies</h1>
             <CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <Img src="https://i.imgur.com/3LHLCji.png"/>
                 <Overlay>
@@ -74,4 +75,4 @@ const ListMovies = () => {
     )
 }
 
-export default ListMovies
+export default DownMovies
