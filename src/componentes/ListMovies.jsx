@@ -17,7 +17,6 @@ const Overlay = styled.div`
     position: absolute;
     left: 0;
     top: 3%;
-    //${props => props.star && 'color: white'}
     ${props => props.star && `
         top: 25%;
         left: 15%;
@@ -41,18 +40,24 @@ const ListMovies = () => {
         <div className="container-md mt-5 mb-5">       
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-lg modal-dialog-centered">
-                <div className="modal-content bg-transparent">
-                  <div className="modal-header ">
-                    <h5 className="modal-title " id="exampleModalLabel">Infamous</h5>
+                <div className="modal-content bg-transparent border-0">
+                  <div className="modal-header border-bottom-0">
+                    <h5 className="modal-title text-warning " id="exampleModalLabel">Infamous</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                  <div className="modal-body">
-                    ...
+                    <div className="row">
+                        <div className="col-3 text-white">
+                            Imagen
+                        </div>
+                        <div className="col-9 text-white">
+                            Datos Pelicula
+                        </div>
+                    </div>
                   </div>
-                 <div className="modal-footer">
-                 {/* <a className="btn btn-lg btn-warning" href="#">VER AHORA</a>
-                 <a className="btn btn-lg btn-outline-warning bg-dark" href="#">VER DESPUES</a> */}
-
+                 <div className="modal-footer border-top-0">
+                    <button className="btn btn-lg btn-warning" >VER AHORA</button>
+                    <button className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
                  </div>
                 </div>
               </div>
