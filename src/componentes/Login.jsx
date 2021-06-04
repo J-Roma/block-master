@@ -18,9 +18,9 @@ const Login = () => {
 	
 	const handleGoogleAuth = () => {
 		//e.preventDefault();
-		console.log(startGoogleAuth);
-		dispatch(startGoogleAuth);
+		dispatch(startGoogleAuth());
 	}
+
 
 	return (
 		<Container>
@@ -28,10 +28,10 @@ const Login = () => {
 				<div className="card-header">
 					<ul className="nav nav-tabs card-header-tabs">
 						<li className="nav-item">
-							<div className="nav-link active" aria-current="true">Iniciar Sesion</div>
+							<Link to="/" className="nav-link active" aria-current="true">Iniciar Sesion</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/register" className="nav-link" href="#">Registrarse</Link>
+							<Link to="/register" className="nav-link">Registrarse</Link>
 						</li>
 					</ul>
 				</div>
@@ -53,7 +53,7 @@ const Login = () => {
 							<button className="btn btn-warning" type="button" onClick={handleGoogleAuth}><FontAwesomeIcon className="me-2" icon={faGoogle} />Iniciar Sesion con Google</button>
 						</div>
 						<div className="d-grid gap-2 col-6 mx-auto">
-							<button className="btn btn-warning" type="submit">Iniciar Sesion</button>
+							<button className="btn btn-warning" type="button">Iniciar Sesion</button>
 						</div>
 					</form>
 				</div>

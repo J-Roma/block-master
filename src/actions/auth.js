@@ -15,18 +15,20 @@ export const logout = () => ({
 
 export const startGoogleAuth = () => {
     return (dispatch) => {
-        firebase
-            .auth()
-            .signInWithPopup(googleAuthProvider)
+        firebase.auth().signInWithPopup(googleAuthProvider)
             .then(({ user }) => {
-                console.log(user);
                 dispatch(login(user.uid, user.displayName));
             })
-            .catch((e) => {
-                console.log(e);
-            });
+
     }
 }
 
+export const startGoogleLogout = () => {
+    return async ( dispatch ) => {
+        await firebase.auth().signOut();
+        dispatch(logout());
+
+    }
+}
 
 

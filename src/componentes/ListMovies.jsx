@@ -41,9 +41,9 @@ const ListMovies = () => {
         <div className="container-md mt-5 mb-5">       
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div className="modal-dialog modal-lg modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Infamous</h5>
+                <div className="modal-content bg-transparent">
+                  <div className="modal-header ">
+                    <h5 className="modal-title " id="exampleModalLabel">Infamous</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                  <div className="modal-body">

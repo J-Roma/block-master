@@ -6,6 +6,8 @@ export const types = {
     // uiSetError: "[ui] Set Error",
     // uiRemoveError: "[ui] Remuve Error",
     // uiStopLogin: "[ui] Stop Login",
+    moviesLoad: "[Movies] Load Movies",
+    moviesDelete: "[Movies] Load Movies",
 }
 
 
