@@ -27,7 +27,6 @@ const Routes = () => {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
-            console.log(user);
             if (user?.uid) {
                 dispatch(login(user.uid, user.displayName));
                 setIsLoggedIn(true)

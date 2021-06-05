@@ -4,11 +4,29 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+// import axios from "axios"
+// import { useDispatch } from "react-redux";
+// import { load } from "../actions/movies";
+// import { useEffect } from "react";
+
 const Icon = styled.div`
     color: #FED941;
 `
 
 const Navbar = () => {
+
+    // const dispatch = useDispatch()
+    // useEffect(() => {
+    //     axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=ed4ef444cf09035de37c391527885e55&language=es')
+    //         .then((datos) => {
+    //             console.log(datos);
+    //             dispatch(load(datos.data.results))
+    //         })
+    //         .catch((e) => {
+    //             console.log(e);
+    //         })
+    // }, [])
+
     return (
         <div className="d-flex justify-content-center">
             <nav className="navbar navbar-expand-lg navbar-dark">
