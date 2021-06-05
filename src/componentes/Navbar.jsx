@@ -13,7 +13,7 @@ const Icon = styled.div`
     color: #FED941;
 `
 
-const Navbar = () => {
+const Navbar = ({isLoggedIn}) => {
 
     // const dispatch = useDispatch()
     // useEffect(() => {
@@ -55,8 +55,10 @@ const Navbar = () => {
                             <button className="btn btn-warning" type="submit">Search</button>
                             </div>
                         </form>
-                        <Link to="/login"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
-      
+                        {
+                            isLoggedIn ? <Link to="/account"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
+                            : <Link to="/login"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
+                        }      
                     </div>
                 </div>
             </nav>

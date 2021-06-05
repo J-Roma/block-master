@@ -7,7 +7,8 @@ export const types = {
     // uiRemoveError: "[ui] Remuve Error",
     // uiStopLogin: "[ui] Stop Login",
     moviesLoad: "[Movies] Load Movies",
-    moviesDelete: "[Movies] Load Movies",
+    moviesAdd: "[Movies] Add Movies Ver Despues",
+    moviesDelete: "[Movies] Delete Movies Ver Despues",
 }
 
 

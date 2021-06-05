@@ -4,10 +4,10 @@ import Slider from '../componentes/Slider';
 
 const Mains = () => {
     return (
-        <div >
+        <>
             <Slider />            
             <ListMovies/>
-        </div>
+        </>
     )
 }
 

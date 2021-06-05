@@ -43,7 +43,7 @@ const Routes = () => {
 
     return (
         <Router>
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn} />
             <Switch>
                 <Route exact path="/" component={Mains} />
                 <Route exact path="/register" component={Register} />
