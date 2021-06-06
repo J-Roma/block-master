@@ -5,6 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 import { useDispatch, useSelector } from "react-redux";
 import { load } from "../actions/movies";
+import { addMovies } from "../actions/crud"
 import axios from "axios"
 
 const CardDiv = styled.button`
@@ -49,19 +50,31 @@ const Img = styled.img`
 
 
 const ListMovies = () => {
-    const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
-    const list = useSelector(state => state.movies.movies)
 
+    const [isLoading, setIsLoading] = useState(true)
     const [targetId, setTargetId] = useState('')
 
-    const handleClick = (e) =>{
-        console.log(e.target.id);
+    const list = useSelector(state => state.movies.movies)
+    const displayname = useSelector(state => state.auth.name)
+
+
+    const handleClick = () => {
+        let datos = [{
+            "id": targetId.id,
+            "url": `https://image.tmdb.org/t/p/w185${targetId.poster_path}`, 
+            "title": targetId.title, 
+            "raiting": targetId.vote_average
+        }] 
+        dispatch(addMovies(datos, displayname))
+    }
+
+    const handleInfo = (e) =>{
+        //console.log(e.target.id);
         let content = list.find( dato => dato.id == e.target.id)
         setTargetId(content)
         // setTargetId(e.target.id)
-        // console.log(list.find(dato => dato.id == e.target.id).overview)
-        // console.log(list.find(dato => dato.id == targetId).poster_path);
+;
     }
 
     useEffect(() => {
@@ -69,7 +82,6 @@ const ListMovies = () => {
             axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=1&language=es'),
             axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=2&language=es'),
             axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=3&language=es')
-
         ])
             .then( axios.spread (async (datosUno, datosDos, datosTres) => {
                 await dispatch(load([...datosUno.data.results, ...datosDos.data.results, ...datosTres.data.results]))
@@ -116,7 +128,7 @@ const ListMovies = () => {
                         </div>
                         <div className="modal-footer border-top-0">
                             <button className="btn btn-lg btn-warning" >VER AHORA</button>
-                            <button className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
+                            <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
                         </div>
                     </div>
                 </div>
@@ -127,8 +139,8 @@ const ListMovies = () => {
             {isLoading ? <h1>Cargando.......</h1> 
             : 
             (list.map(datos => 
-            (<div className="p-3"><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" key={datos.id}>
-                <Img id={datos.id} onClick={handleClick} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
+            (<div className="p-3" key={datos.idDb}><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
                 <Overlay>
                     <Img src="https://i.imgur.com/GHZrOvx.png" />
                     <Overlay star>

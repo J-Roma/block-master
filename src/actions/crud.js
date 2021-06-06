@@ -1,9 +1,9 @@
 import { types } from '../types/Types';
-import { firebase, googleAuthProvider } from "../firebase/config"
+import { firebase, db } from "../firebase/config"
 //import { useDispatch } from 'react-redux';
 
 
-export const movies = (movies) => ({
+export const verdespues = (verdespues) => ({
     type: types.moviesAdd,
     payload: {
         verdespues
@@ -11,16 +11,25 @@ export const movies = (movies) => ({
 
 })
 
-export const addMovies = (datos) => {    
-    
-    return (dispatch) => {
-        dispatch(verdespues(datos))
+export const addMovies = (datos, name ) => { 
+    return async (dispatch,getSate) => {
+        await dispatch(verdespues(datos))
+        let add = getSate().crud.verdespues[0]
+        db.collection(`users/${name.split(' ').join('')}/verDespues`)
+                .add(add)
+                
+        //dispatch(verdespues(datos))
     }
 }
 
-export const deleteMovies = (datos) => {    
-    
-    return (dispatch) => {
-        dispatch(verdespues(datos))
+export const deleteMovies = (idDb) => {    
+   
+    return async (getSate) => {
+        let name = getSate().auth.name.split(' ').join('')
+        await db.collection(`users/${name}/verDespues`)
+        .doc(`${idDb}`)
+        .delete()
+            .then(() => console.log('Borrado'))
+            .catch(e => console.log(e))
     }
 }

@@ -1,48 +1,157 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { startGoogleLogout } from '../actions/auth';
 import { Link } from 'react-router-dom';
+import { db } from '../firebase/config';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { verdespues, deleteMovies } from '../actions/crud';
+
 
 const AdminContainer = styled.div`
 
   border: #FED941 5px solid;
   border-radius: 15px;
 `
+const CardDiv = styled.button`
+    position: relative;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+`
+const Overlay = styled.div`
+    position: absolute;
+    left: 0;
+    top: 3%;
+
+    ${props => props.star && `
+        top: 25%;
+        left: 15%;
+        font-size: 21px;
+        color: #FED941;
+    `};
+    ${props => props.rating && `
+        top: 28%;
+        left: 45%;
+        color: #fff;
+    `};
+    ${props => props.delete && `
+        font-size: 35px;
+        top: 78%;
+        right: 0%;
+        color: red;
+    `};
+`
+
+const Img = styled.img`
+    @media (max-width: 768px) {
+        width: 140px;
+    }
+    @media (max-width: 576px) {
+        width: 120px;
+    }
+    @media (max-width: 330px) {
+        width: 90px;
+    }
+`
+
 const Favorites = () => {
 
-	const dispatch = useDispatch();
-	
-	const handleLogout = () => {
-		dispatch(startGoogleLogout());
-	}
+  const dispatch = useDispatch();
+  const pintar = useSelector(state => state.crud.verdespues)
+  console.log(pintar.length);
 
-    return (
-        <AdminContainer className="container-md bg-white mt-3 p-3">
-          <div className="row">
-            <div className="col-2">
-              <ul className="nav flex-column">
-                <li className="nav-item mb-2">
-                  <Link to="/account" className="nav-link " aria-current="page">Cuenta</Link>
-                </li>
-                <li className="nav-item mb-2">
-                  <Link to="/favorites" className="nav-link active">Favoritos</Link>
-                </li>
-                <li className="nav-item mb-2">
-                  <button onClick={handleLogout} className="btn btn-danger" type="button">Cerrar Sesion</button>
-                </li>
-              </ul>
-            </div>
-            <div className="col-10">
-              Favoritos
-            </div>
-          </div>
-    
-    
-    
-    
-        </AdminContainer>
-      )
+  const handleLogout = () => {
+    dispatch(startGoogleLogout());
+  }
+
+  const handleDelete = (e) => {
+    console.log(e.target.id);
+    let idDb = e.target.id;
+    dispatch(deleteMovies(idDb))
+  }
+
+  useEffect(() => {
+    // Hago referencia a la coleccion, luego con snapshop trae el contenido,
+    // y luego forEach al snap hjo para traer la data
+    db.collection('users/JhosepRopero/verDespues')
+      .onSnapshot(snap => {
+
+        const verDespues = [];
+
+        snap.forEach(snapHijo => {
+
+          verDespues.push({
+            idDb: snapHijo.id,
+            ...snapHijo.data()
+          })
+
+        })
+
+        dispatch(verdespues(verDespues))
+      });
+  }, [])
+  return (
+    <AdminContainer className="container-md bg-white mt-3 p-3">
+      <div className="row">
+        <div className="col-md-2">
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <Link to="/account" className="nav-link " aria-current="page">Cuenta</Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link to="/favorites" className="nav-link active">Favoritos</Link>
+            </li>
+            <li className="nav-item mb-2">
+              <button onClick={handleLogout} className="btn btn-danger" type="button">Cerrar Sesion</button>
+            </li>
+          </ul>
+        </div>
+        <div className="col-md-10">
+        <h1 className="text-center mt-3">Mi Lista</h1>
+
+          <div className="d-flex flex-wrap justify-content-around mt-5 mb-5 bg-dark rounded p-2">
+            {pintar.length < 1 ? <h1>Cargando.......</h1>
+              :
+              (pintar.map(datos =>
+              (<div className="p-3" key={datos.id}><CardDiv >
+                <Img className="rounded" id={datos.id} src={`https://image.tmdb.org/t/p/w185${datos.url}`} />
+                <Overlay>
+                  <Img  src="https://i.imgur.com/GHZrOvx.png" />
+                  <Overlay star>
+                    <FontAwesomeIcon icon={faStar} />
+                  </Overlay>
+                  <Overlay rating>
+                    <h1 className="fs-4">{datos.raiting}</h1>
+                  </Overlay>
+                </Overlay>
+                <Overlay delete>
+                  <button 
+                  id={datos.idDb}
+                  className="btn btn-danger"
+                  onClick={handleDelete}
+                  >
+                    Borrar
+                  </button>
+                </Overlay>
+              </CardDiv>
+              </div>)))
+            }</div>
+
+        </div>
+      </div>
+
+
+
+
+    </AdminContainer>
+  )
 }
 
 export default Favorites
