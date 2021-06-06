@@ -108,21 +108,21 @@ const ListMovies = () => {
     return (
         
         <div className="container">
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg modal-dialog-centered ">
                     <div className="modal-content bg-transparent border-0">
                         <div className="modal-header border-bottom-0">
-                            <h5 className="modal-title text-warning " id="exampleModalLabel">Infamous</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className="row g-2">
                                 <div className="col-md-3 text-white text-center">
-                                    {targetId != '' && <img src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`}/>}
+                                    {targetId !== '' && <img src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`}/>}
                                 </div>
-                                <div className="col-md-9 text-white">
-                                    Datos Pelicula
-                                    {targetId != '' && targetId.overview}
+                                <div className="col-md-9 text-white p-4">
+                                    <h3 className="modal-title text-warning mb-3" id="exampleModalLabel"><strong>{targetId !== '' && targetId.title}</strong></h3>
+
+                                    {targetId !== '' && targetId.overview}
                         </div>
                             </div>
                         </div>

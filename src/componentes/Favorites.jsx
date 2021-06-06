@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { startGoogleLogout } from '../actions/auth';
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../firebase/config';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { verdespues, deleteMovies } from '../actions/crud';
 
 
@@ -15,7 +15,7 @@ const AdminContainer = styled.div`
   border: #FED941 5px solid;
   border-radius: 15px;
 `
-const CardDiv = styled.button`
+const CardDiv = styled.div`
     position: relative;
     background: none;
     color: inherit;
@@ -44,7 +44,8 @@ const Overlay = styled.div`
     ${props => props.delete && `
         font-size: 35px;
         top: 78%;
-        right: 0%;
+        left: 32%;
+        margin: 0 auto;
         color: red;
     `};
 `
@@ -65,16 +66,16 @@ const Favorites = () => {
 
   const dispatch = useDispatch();
   const pintar = useSelector(state => state.crud.verdespues)
-  console.log(pintar.length);
 
   const handleLogout = () => {
     dispatch(startGoogleLogout());
   }
 
   const handleDelete = (e) => {
-    console.log(e.target.id);
+
     let idDb = e.target.id;
     dispatch(deleteMovies(idDb))
+
   }
 
   useEffect(() => {
@@ -121,16 +122,8 @@ const Favorites = () => {
               :
               (pintar.map(datos =>
               (<div className="p-3" key={datos.id}><CardDiv >
+                
                 <Img className="rounded" id={datos.id} src={`https://image.tmdb.org/t/p/w185${datos.url}`} />
-                <Overlay>
-                  <Img  src="https://i.imgur.com/GHZrOvx.png" />
-                  <Overlay star>
-                    <FontAwesomeIcon icon={faStar} />
-                  </Overlay>
-                  <Overlay rating>
-                    <h1 className="fs-4">{datos.raiting}</h1>
-                  </Overlay>
-                </Overlay>
                 <Overlay delete>
                   <button 
                   id={datos.idDb}
@@ -139,6 +132,16 @@ const Favorites = () => {
                   >
                     Borrar
                   </button>
+                </Overlay>                
+                <Overlay>
+                  <Img  src="https://i.imgur.com/GHZrOvx.png"/>
+
+                  <Overlay star>
+                    <FontAwesomeIcon icon={faStar} />
+                  </Overlay>
+                  <Overlay rating>
+                    <h1 className="fs-4">{datos.raiting}</h1>
+                  </Overlay>
                 </Overlay>
               </CardDiv>
               </div>)))

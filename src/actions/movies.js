@@ -1,5 +1,5 @@
 import { types } from '../types/Types';
-import { firebase, googleAuthProvider } from "../firebase/config"
+//import { firebase, googleAuthProvider } from "../firebase/config"
 //import { useDispatch } from 'react-redux';
 
 

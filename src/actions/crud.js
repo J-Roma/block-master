@@ -1,5 +1,5 @@
 import { types } from '../types/Types';
-import { firebase, db } from "../firebase/config"
+import { db } from "../firebase/config"
 //import { useDispatch } from 'react-redux';
 
 
@@ -24,7 +24,7 @@ export const addMovies = (datos, name ) => {
 
 export const deleteMovies = (idDb) => {    
    
-    return async (getSate) => {
+    return async (dispatch, getSate) => {
         let name = getSate().auth.name.split(' ').join('')
         await db.collection(`users/${name}/verDespues`)
         .doc(`${idDb}`)
