@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { load } from "../actions/movies";
 import { addMovies } from "../actions/crud"
 import axios from "axios"
+import useScroll from "@gitgw/use-scroll";
+
 
 const CardDiv = styled.button`
     position: relative;
@@ -35,7 +37,6 @@ const Overlay = styled.div`
         color: #fff;
     `};
 `
-
 const Img = styled.img`
     @media (max-width: 768px) {
         width: 140px;
@@ -50,13 +51,21 @@ const Img = styled.img`
 
 
 const ListMovies = () => {
-    const dispatch = useDispatch()
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [targetId, setTargetId] = useState('')
-
-    const list = useSelector(state => state.movies.movies)
-    const displayname = useSelector(state => state.auth.name)
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
+    const [targetId, setTargetId] = useState('');
+    const list = useSelector(state => state.movies.movies);
+    const [pagina, setPagina] = useState(1)
+    //const [final, setFinal] = useState(false);
+    const displayname = useSelector(state => state.auth.name);
+    //Se declara el observador con useRef, y se dice que apenas sea visible active la accion (threshold: 1)
+    const observer = useRef( new IntersectionObserver((entries) => {
+        const first = entries[0];
+        if (first.isIntersecting){
+            loader.current();
+        }
+    }, {threshold: 1}));
+    const [element, setElement] = useState(null)
 
 
     const handleClick = () => {
@@ -69,37 +78,60 @@ const ListMovies = () => {
         dispatch(addMovies(datos, displayname))
     }
 
+
     const handleInfo = (e) =>{
-        //console.log(e.target.id);
         let content = list.find( dato => dato.id == e.target.id)
         setTargetId(content)
-        // setTargetId(e.target.id)
-;
     }
 
-    useEffect(() => {
-        axios.all([
-            axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=1&language=es'),
-            axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=2&language=es'),
-            axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=3&language=es')
-        ])
-            .then( axios.spread (async (datosUno, datosDos, datosTres) => {
-                await dispatch(load([...datosUno.data.results, ...datosDos.data.results, ...datosTres.data.results]))
-                setIsLoading(false)
-            }))
-            .catch((e) => {
-                console.log(e);
-            })
+    const loadMoreMovies = () =>{
+        setPagina(pagina + 1)
+        console.log(pagina);
+    }    
+    const loader = useRef(loadMoreMovies)
 
-        // axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=ed4ef444cf09035de37c391527885e55&language=es')
-        //     .then(async (datos) => {
-        //         await dispatch(load(datos.data.results))
+    useEffect(() => {
+        loader.current = loadMoreMovies;
+      }, [loadMoreMovies]);
+
+    useEffect(() => {
+        const currentElement = element;
+        const currentObserver = observer.current;
+
+        if (currentElement) {
+            currentObserver.observe(currentElement);
+        }
+
+        return () => {
+
+            if (currentElement) {
+                currentObserver.unobserve(currentElement);
+            }
+        }
+    }, [element])
+
+    useEffect(() => {
+        // axios.all([
+        //     axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=1&language=es'),
+        //     axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=2&language=es'),
+        //     axios.get('https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=3&language=es'),
+        // ])
+        //     .then( axios.spread (async (datosUno, datosDos, datosTres ) => {
+        //         await dispatch(load([...datosUno.data.results, ...datosDos.data.results, ...datosDos.data.results]))
         //         setIsLoading(false)
-        //     })
+        //     }))
         //     .catch((e) => {
         //         console.log(e);
         //     })
-    }, [])
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=ed4ef444cf09035de37c391527885e55&page=${pagina}&language=es`)
+            .then(async (datos) => {
+                await dispatch(load([...list, ...datos.data.results]))
+                setIsLoading(false)
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    }, [pagina])
 
     if (isLoading) {
         return <h1>Cargando......</h1>
@@ -107,7 +139,7 @@ const ListMovies = () => {
     
     return (
         
-        <div className="container">
+        <div className="container" >
             <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-centered ">
                     <div className="modal-content bg-transparent border-0">
@@ -153,7 +185,12 @@ const ListMovies = () => {
             </CardDiv></div>)))
             }</div>
 
+            
+            {
+                <ul ref={setElement}></ul>
+            }
 
+        
 
         </div>
     )
