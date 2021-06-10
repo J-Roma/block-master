@@ -11,6 +11,8 @@ export const types = {
     uiFinishLoading: '[UI] Finish loading',
 
     moviesLoad: "[Movies] Load Movies",
+    moviesTopLoad: "[Movies] Load Movies Top Raiting",
+    moviesLowLoad: "[Movies] Load Movies Low Raiting",
     moviesAdd: "[Movies] Add Movies Ver Despues",
     moviesDelete: "[Movies] Delete Movies Ver Despues",
 }

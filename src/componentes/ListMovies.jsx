@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { load } from "../actions/movies";
 import { addMovies } from "../actions/crud"
 import axios from "axios"
-import useScroll from "@gitgw/use-scroll";
+
 
 
 const CardDiv = styled.button`
@@ -52,6 +52,7 @@ const Img = styled.img`
 
 const ListMovies = () => {
     const dispatch = useDispatch();
+    //const [reset, setReset] = useState(true)
     const [isLoading, setIsLoading] = useState(true);
     const [targetId, setTargetId] = useState('');
     const list = useSelector(state => state.movies.movies);
@@ -59,40 +60,40 @@ const ListMovies = () => {
     //const [final, setFinal] = useState(false);
     const displayname = useSelector(state => state.auth.name);
     //Se declara el observador con useRef, y se dice que apenas sea visible active la accion (threshold: 1)
-    const observer = useRef( new IntersectionObserver((entries) => {
+    const observer = useRef(new IntersectionObserver((entries) => {
         const first = entries[0];
-        if (first.isIntersecting){
+        if (first.isIntersecting) {
             loader.current();
         }
-    }, {threshold: 1}));
+    }, { threshold: 1 }));
     const [element, setElement] = useState(null)
 
 
     const handleClick = () => {
         let datos = [{
             "id": targetId.id,
-            "url": `https://image.tmdb.org/t/p/w185${targetId.poster_path}`, 
-            "title": targetId.title, 
+            "url": `https://image.tmdb.org/t/p/w185${targetId.poster_path}`,
+            "title": targetId.title,
             "raiting": targetId.vote_average
-        }] 
+        }]
         dispatch(addMovies(datos, displayname))
     }
 
 
-    const handleInfo = (e) =>{
-        let content = list.find( dato => dato.id == e.target.id)
+    const handleInfo = (e) => {
+        let content = list.find(dato => dato.id == e.target.id)
         setTargetId(content)
     }
 
-    const loadMoreMovies = () =>{
+    const loadMoreMovies = () => {
         setPagina(pagina + 1)
         console.log(pagina);
-    }    
+    }
     const loader = useRef(loadMoreMovies)
 
     useEffect(() => {
         loader.current = loadMoreMovies;
-      }, [loadMoreMovies]);
+    }, [loadMoreMovies]);
 
     useEffect(() => {
         const currentElement = element;
@@ -136,9 +137,9 @@ const ListMovies = () => {
     if (isLoading) {
         return <h1>Cargando......</h1>
     }
-    
+
     return (
-        
+
         <div className="container" >
             <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-centered ">
@@ -149,13 +150,13 @@ const ListMovies = () => {
                         <div className="modal-body">
                             <div className="row g-2">
                                 <div className="col-md-3 text-white text-center">
-                                    {targetId !== '' && <img src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`}/>}
+                                    {targetId !== '' && <img src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`} />}
                                 </div>
                                 <div className="col-md-9 text-white p-4">
                                     <h3 className="modal-title text-warning mb-3" id="exampleModalLabel"><strong>{targetId !== '' && targetId.title}</strong></h3>
 
                                     {targetId !== '' && targetId.overview}
-                        </div>
+                                </div>
                             </div>
                         </div>
                         <div className="modal-footer border-top-0">
@@ -166,31 +167,35 @@ const ListMovies = () => {
                 </div>
             </div>
 
-            
+
             <div className="d-flex flex-wrap justify-content-around mt-5 mb-5">
-            {isLoading ? <h1>Cargando.......</h1> 
-            : 
-            (list.map(datos => 
-            (<div className="p-3" key={datos.idDb}><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
-                <Overlay>
-                    <Img src="https://i.imgur.com/GHZrOvx.png" />
-                    <Overlay star>
-                        <FontAwesomeIcon icon={faStar} />
-                    </Overlay>
-                    <Overlay rating>
-                        <h1 className="fs-4">{datos.vote_average}</h1>
-                    </Overlay>
-                </Overlay>
-            </CardDiv></div>)))
-            }</div>
+                {isLoading ? <h1>Cargando.......</h1>
+                    :
+                    (list.map(datos =>
+                    (<div className="p-3" key={datos.idDb}><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                        <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
+                        <Overlay>
+                            <Img src="https://i.imgur.com/GHZrOvx.png" />
+                            <Overlay star>
+                                <FontAwesomeIcon icon={faStar} />
+                            </Overlay>
+                            <Overlay rating>
+                                <h1 className="fs-4">{datos.vote_average}</h1>
+                            </Overlay>
+                        </Overlay>
+                    </CardDiv></div>)))
+                }</div>
 
-            
-            {
-                <ul ref={setElement}></ul>
-            }
 
-        
+            <div className="row">
+                <div className="col-12 text-center">
+                    <div ref={setElement} class="spinner-border text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
     )

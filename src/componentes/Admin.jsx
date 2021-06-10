@@ -26,7 +26,10 @@ const Admin = () => {
               <Link to="/account" className="nav-link active" aria-current="page">Cuenta</Link>
             </li>
             <li className="nav-item mb-2">
-              <Link to="/favorites" className="nav-link">Favoritos</Link>
+              <Link to="/account/favorites" className="nav-link">Favoritos</Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link to="/account/controlpanel" className="nav-link">Panel de Control</Link>
             </li>
             <li className="nav-item mb-2">
                 <button onClick={handleLogout} className="btn btn-danger" type="button">Cerrar Sesion</button>

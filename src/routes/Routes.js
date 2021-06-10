@@ -19,6 +19,7 @@ import Admin from '../componentes/Admin'
 import { PrivateRoute } from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Favorites from '../componentes/Favorites';
+import ControlPanel from '../componentes/ControlPanel';
 
 const Routes = () => {
     const [cheking, setChecking] = useState(true);
@@ -65,9 +66,15 @@ const Routes = () => {
                 />
                 <PrivateRoute
                     exact
-                    path="/favorites" 
+                    path="/account/favorites" 
                     isLoggedIn={isLoggedIn} 
                     component={Favorites}
+                />
+                <PrivateRoute
+                    exact
+                    path="/account/controlpanel" 
+                    isLoggedIn={isLoggedIn} 
+                    component={ControlPanel}
                 />
                 <Redirect to="/"/>
             </Switch>
