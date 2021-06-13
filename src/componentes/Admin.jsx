@@ -8,6 +8,7 @@ const AdminContainer = styled.div`
 
   border: #FED941 5px solid;
   border-radius: 15px;
+  height: 80vh;
 `
 const Admin = () => {
 

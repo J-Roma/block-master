@@ -20,6 +20,9 @@ import { PrivateRoute } from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Favorites from '../componentes/Favorites';
 import ControlPanel from '../componentes/ControlPanel';
+import LoginFormik from '../componentes/LoginFormik';
+import RegisterFormik from '../componentes/RegisterFormik';
+import ShowMovie from '../componentes/ShowMovie';
 
 const Routes = () => {
     const [cheking, setChecking] = useState(true);
@@ -60,23 +63,33 @@ const Routes = () => {
 
                 <PrivateRoute
                     exact
-                    path="/account" 
-                    isLoggedIn={isLoggedIn} 
+                    path="/account"
+                    isLoggedIn={isLoggedIn}
                     component={Admin}
                 />
+
                 <PrivateRoute
                     exact
-                    path="/account/favorites" 
-                    isLoggedIn={isLoggedIn} 
+                    path="/account/favorites"
+                    isLoggedIn={isLoggedIn}
                     component={Favorites}
                 />
+
                 <PrivateRoute
                     exact
-                    path="/account/controlpanel" 
-                    isLoggedIn={isLoggedIn} 
+                    path="/account/controlpanel"
+                    isLoggedIn={isLoggedIn}
                     component={ControlPanel}
                 />
-                <Redirect to="/"/>
+
+                <PrivateRoute
+                    exact
+                    path="/movie/:id"
+                    isLoggedIn={isLoggedIn}
+                    component={ShowMovie}
+                />
+
+                <Redirect to="/" />
             </Switch>
         </Router>
     )

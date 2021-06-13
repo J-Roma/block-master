@@ -14,7 +14,10 @@ const AdminContainer = styled.div`
 
   border: #FED941 5px solid;
   border-radius: 15px;
+  height: 80vh;
+
 `
+
 const CardDiv = styled.div`
     position: relative;
     background: none;
@@ -25,6 +28,7 @@ const CardDiv = styled.div`
     cursor: pointer;
     outline: inherit;
 `
+
 const Overlay = styled.div`
     position: absolute;
     left: 0;

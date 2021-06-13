@@ -1,51 +1,81 @@
+import axios from 'axios'
 import React, { useState, useRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { uploadedMoviesList } from '../../actions/crud'
 
 const Panel = () => {
-
+    
+    //Subir info Video a Firebase
+    const [uploadedMovies, setUploadedMovies] = useState({
+        idTMDB: '',
+        name: '',
+        src: '',
+    })
+    const [url, seturl] = useState('')
+    const [files, setFiles] = useState("")
+    const dispatch = useDispatch()
     const movieList = useSelector(state => state.movies.movies)
-    const [isLoading, setIsLoading] = useState(true);
-    const observer = useRef(new IntersectionObserver((entries) => {
-        const first = entries[0];
-        if (first.isIntersecting) {
-            // loader.current();
-            console.log('Hey!');
-        }
+    // Upload Api Cloudinary
+    const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/romajs/auto/upload'
+    const CLOUDINARY_UPLOAD_PRESET = 'htam81et'
+
+    const handleIdName = (e) => {
+        const movie = e.target.value.split('|')
+        console.log(movie);
+        const data = [];
+        movie.forEach(el => {   
+            let temp = el.replace(' ', '')
+            data.push(temp)
+        })
+        console.log(data);
+        setUploadedMovies({
+            ...uploadedMovies,
+            idTMDB: data[0],
+            name: data[1]
+        })
+    }
+
+    const handleSubmitUploadVideos = async () => {
+        console.log(files);
+        const formData = new FormData();
+        formData.append('file', files);
+        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        await axios({
+            url: CLOUDINARY_API,
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin',
+                'Access-Control-Allow-Credentials': true,
+            },
+            data: formData
+        })
+        .then( res => {
+            console.log(res.data.secure_url)
+            setUploadedMovies({
+                ...uploadedMovies,
+                src: `${res.data.secure_url}`
+            })
+            seturl(res.data.secure_url)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
         
-
-    }, { threshold: 1 }));
-    const [element, setElement] = useState(null)
-    // const loader = useRef(loadMoreMovies)
-    // useEffect(() => {
-    //     loader.current = loadMoreMovies;
-    // }, [loadMoreMovies]);
-
     useEffect(() => {
-        const currentElement = element;
-        const currentObserver = observer.current;
-
-        if (currentElement) {
-            currentObserver.observe(currentElement);
-        }
-
-        return () => {
-
-            if (currentElement) {
-                currentObserver.unobserve(currentElement);
-            }
-        }
-    }, [element])
+        url && dispatch(uploadedMoviesList(uploadedMovies))        
+    }, [url])
 
     return (
         <div>
             <h3 className="text-center p-3">Añadir Peliculas</h3>
             <label for="exampleDataList" className="form-label">Que Pelicula quieres Añadir:</label>
-            <input className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
+            <input onChange={handleIdName} className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
             <datalist id="datalistOptions">
                 {
                     movieList.map( movie => <option value={`${movie.id} | ${movie.title}`} />)
                 }
-                <option ref={setElement} value="Loading..." />
                 {/* <option value="San Francisco" />
                 <option value="New York" />
                 <option value="Seattle" />
@@ -53,15 +83,12 @@ const Panel = () => {
                 <option value="Chicago" /> */}
             </datalist>
             <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input class="form-control form-control-sm" type="file" id="formFileMultiple" multiple />
+                <label for="formFileMultiple" class="form-label">Subir archivo...</label>
+                <input onChange={(e) => setFiles(e.target.files[0])} class="form-control form-control-sm" type="file" id="formFileMultiple" multiple />
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Descripcion:</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
+    
             <div className="text-center">
-                <button className="btn btn-warning">Subir Pelicula</button>
+                <button onClick={handleSubmitUploadVideos} className="btn btn-warning" type="button">Subir Pelicula</button>
             </div>
         </div>
     )

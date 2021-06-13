@@ -6,7 +6,7 @@ import { startGoogleLogout } from '../actions/auth'
 import Panel from './panel/Panel'
 
 const AdminContainer = styled.div`
-
+  height: 80vh;
   border: #FED941 5px solid;
   border-radius: 15px;
 `

@@ -7,8 +7,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { load } from "../actions/movies";
 import { addMovies } from "../actions/crud"
 import axios from "axios"
+import { Link } from 'react-router-dom';
 
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    Button,
+    Flex,
+    Box,
+    Image,
+    Text
 
+} from "@chakra-ui/react"
 
 const CardDiv = styled.button`
     position: relative;
@@ -51,6 +67,8 @@ const Img = styled.img`
 
 
 const ListMovies = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     const dispatch = useDispatch();
     //const [reset, setReset] = useState(true)
     const [isLoading, setIsLoading] = useState(true);
@@ -141,11 +159,50 @@ const ListMovies = () => {
     return (
 
         <div className="container" >
+            <Button onClick={onOpen}>Open Modal</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose}  >
+                <ModalOverlay />
+                <ModalContent bg="trasparent" width="100%">
+                    <ModalHeader>
+                    {targetId !== '' && <Text fontSize="2xl" textAling="center" color="yellow" >{targetId !== '' && targetId.title}</Text>}
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                    <Box flex="1" >
+                            </Box>
+                        <Flex color="white">
+                            
+                            <Box  flex=".5" >
+                                
+                                <Image src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`}/>
+                            </Box>
+                            <Box flex="1" >
+                            {targetId !== '' && <Text fontSize="xl" p={3}>{targetId.overview}</Text>}
+                            </Box>
+                            
+                        </Flex>
+                        <div className="col-md-3 text-white text-center">
+                        </div>
+                        <div className="col-md-9 text-white p-4">
+                            <h3 className="modal-title text-warning mb-3" id="exampleModalLabel"><strong></strong></h3>
+
+                        </div>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        <Link to={`/movie/${targetId.id}`}><Button variant="ghost">Secondary Action</Button></Link>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
             <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-centered ">
                     <div className="modal-content bg-transparent border-0">
                         <div className="modal-header border-bottom-0">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close btn-warning" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className="row g-2">
@@ -160,7 +217,7 @@ const ListMovies = () => {
                             </div>
                         </div>
                         <div className="modal-footer border-top-0">
-                            <button className="btn btn-lg btn-warning" >VER AHORA</button>
+                            <Link to={`/movie/${targetId.id}`}><button className="btn btn-lg btn-warning" data-bs-dismiss="modal">VER AHORA</button></Link>
                             <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import { types } from '../types/Types';
 import { db } from "../firebase/config"
+import Swal from 'sweetalert2';
 //import { useDispatch } from 'react-redux';
 
 
@@ -33,3 +34,38 @@ export const deleteMovies = (idDb) => {
             .catch(e => console.log(e))
     }
 }
+
+export const uploadedMoviesList = (movie) => {
+    return async (dispatch) => {
+        db.collection(`movieList`)
+        .add(movie)
+            .then(res => {
+                Swal.fire({
+                    title: 'Exito!',
+                    text: 'Has Subido la Pelicula Con exito',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                })
+            })
+            .catch(e => console.log(e))
+    }      
+    
+}
+
+// export const verify = (id) => {
+//     if (id) {
+//         const dato = []
+//         db.collection('movieList')
+//         .onSnapshot( snap => {
+            
+//             snap.forEach(snapHijo => {
+//                 snapHijo.id && dato.push({
+//                     ...snapHijo.data()
+//                 })
+//             })
+            
+//         })
+//         dato = dato.find(el => el.idTMDB == '632357');
+//     }
+//     return (dato) 
+// }
