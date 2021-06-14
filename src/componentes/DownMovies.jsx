@@ -6,6 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadLowMovies } from "../actions/movies";
 import { addMovies } from "../actions/crud"
 import axios from "axios"
+import { Link } from 'react-router-dom';
+
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    Image,
+    Text,
+    Grid,
+    GridItem
+} from "@chakra-ui/react"
 
 const CardDiv = styled.button`
     position: relative;
@@ -16,10 +32,6 @@ const CardDiv = styled.button`
     font: inherit;
     cursor: pointer;
     outline: inherit;
-`
-
-const Spinner = styled.div`
-    margin: 0 auto;
 `
 
 const Overlay = styled.div`
@@ -46,10 +58,9 @@ const Img = styled.img`
 
 
 const DownMovies = () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     //URL Ordenar por Menor popularidad https://api.themoviedb.org/3/discover/movie?api_key=71168d3dc8fba2791d849d19ba33aeb5&sort_by=popularity.desc&page=1
     const dispatch = useDispatch();
-    const [reset, setReset] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [targetId, setTargetId] = useState('');
     const list = useSelector(state => state.movies.lowMovies);
@@ -126,38 +137,42 @@ const DownMovies = () => {
 
     return (
         <div className="container" >
-            <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg modal-dialog-centered ">
-                    <div className="modal-content bg-transparent border-0">
-                        <div className="modal-header border-bottom-0">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row g-2">
-                                <div className="col-md-3 text-white text-center">
-                                    {targetId !== '' && <img src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`} />}
-                                </div>
-                                <div className="col-md-9 text-white p-4">
-                                    <h3 className="modal-title text-warning mb-3" id="exampleModalLabel"><strong>{targetId !== '' && targetId.title}</strong></h3>
+            <Modal isOpen={isOpen} onClose={onClose} size="5xl">
+                <ModalOverlay />
+                <ModalContent bg="trasparent" >
+                    <ModalHeader>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Grid
+                            h="200px"
+                            templateRows="repeat(2, 1fr)"
+                            templateColumns="repeat(5, 1fr)"
+                            gap={4}
+                        >
+                            <GridItem rowSpan={4} colSpan={1} >
+                                <Image boxSize="280px" src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`} />
+                            </GridItem>
+                            <GridItem colSpan={4}>
+                                {targetId !== '' && <Text fontSize="2xl" textAling="center" mb={5} color="yellow" ><strong>{targetId !== '' && targetId.title}</strong></Text>}
+                                {targetId !== '' && <Text fontSize="xl" color="white" ><strong>{targetId.overview}</strong></Text>}
+                            </GridItem>
+                        </Grid>
+                    </ModalBody>
+                    <ModalFooter mt={10} >
 
-                                    {targetId !== '' && targetId.overview}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer border-top-0">
-                            <button className="btn btn-lg btn-warning" >VER AHORA</button>
-                            <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <Link to={`/movie/${targetId.id}`}><button className="btn btn-lg btn-warning" onClick={onClose}>VER AHORA</button></Link>
+                        <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark ms-3" >VER DESPUES</button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
 
 
             <div className="d-flex flex-wrap justify-content-around mt-5 mb-5">
                 {isLoading ? <h1>Cargando.......</h1>
                     :
                     (list.map(datos =>
-                    (<div className="p-3" key={datos.idDb}><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                    (<div className="p-3" key={datos.idDb}><CardDiv type="button" onClick={onOpen}  >
                         <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
                         <Overlay>
                             <Img src="https://i.imgur.com/GHZrOvx.png" />

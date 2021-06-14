@@ -69,8 +69,8 @@ const Panel = () => {
 
     return (
         <div>
-            <h3 className="text-center p-3">Añadir Peliculas</h3>
-            <label for="exampleDataList" className="form-label">Que Pelicula quieres Añadir:</label>
+            <h3 className="text-center p-3 text-warning fs-1">Añadir Peliculas</h3>
+            <label for="exampleDataList" className="form-label text-white fs-5">Que Pelicula quieres Añadir:</label>
             <input onChange={handleIdName} className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
             <datalist id="datalistOptions">
                 {
@@ -83,12 +83,12 @@ const Panel = () => {
                 <option value="Chicago" /> */}
             </datalist>
             <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Subir archivo...</label>
+                <label for="formFileMultiple" class="form-label text-white fs-5 mt-3">Subir archivo...</label>
                 <input onChange={(e) => setFiles(e.target.files[0])} class="form-control form-control-sm" type="file" id="formFileMultiple" multiple />
             </div>
     
             <div className="text-center">
-                <button onClick={handleSubmitUploadVideos} className="btn btn-warning" type="button">Subir Pelicula</button>
+                <button onClick={handleSubmitUploadVideos} className="btn btn-warning " type="button">Subir Pelicula</button>
             </div>
         </div>
     )

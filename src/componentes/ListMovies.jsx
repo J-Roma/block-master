@@ -18,12 +18,10 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    Button,
-    Flex,
-    Box,
     Image,
-    Text
-
+    Text,
+    Grid,
+    GridItem
 } from "@chakra-ui/react"
 
 const CardDiv = styled.button`
@@ -68,14 +66,11 @@ const Img = styled.img`
 
 const ListMovies = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
     const dispatch = useDispatch();
-    //const [reset, setReset] = useState(true)
     const [isLoading, setIsLoading] = useState(true);
     const [targetId, setTargetId] = useState('');
     const list = useSelector(state => state.movies.movies);
     const [pagina, setPagina] = useState(1)
-    //const [final, setFinal] = useState(false);
     const displayname = useSelector(state => state.auth.name);
     //Se declara el observador con useRef, y se dice que apenas sea visible active la accion (threshold: 1)
     const observer = useRef(new IntersectionObserver((entries) => {
@@ -85,7 +80,6 @@ const ListMovies = () => {
         }
     }, { threshold: 1 }));
     const [element, setElement] = useState(null)
-
 
     const handleClick = () => {
         let datos = [{
@@ -159,46 +153,36 @@ const ListMovies = () => {
     return (
 
         <div className="container" >
-            <Button onClick={onOpen}>Open Modal</Button>
-
-            <Modal isOpen={isOpen} onClose={onClose}  >
+            <Modal isOpen={isOpen} onClose={onClose} size="5xl">
                 <ModalOverlay />
-                <ModalContent bg="trasparent" width="100%">
+                <ModalContent bg="trasparent" >
                     <ModalHeader>
-                    {targetId !== '' && <Text fontSize="2xl" textAling="center" color="yellow" >{targetId !== '' && targetId.title}</Text>}
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                    <Box flex="1" >
-                            </Box>
-                        <Flex color="white">
-                            
-                            <Box  flex=".5" >
-                                
-                                <Image src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`}/>
-                            </Box>
-                            <Box flex="1" >
-                            {targetId !== '' && <Text fontSize="xl" p={3}>{targetId.overview}</Text>}
-                            </Box>
-                            
-                        </Flex>
-                        <div className="col-md-3 text-white text-center">
-                        </div>
-                        <div className="col-md-9 text-white p-4">
-                            <h3 className="modal-title text-warning mb-3" id="exampleModalLabel"><strong></strong></h3>
-
-                        </div>
+                        <Grid
+                            h="200px"
+                            templateRows="repeat(2, 1fr)"
+                            templateColumns="repeat(5, 1fr)"
+                            gap={4}
+                        >
+                            <GridItem rowSpan={4} colSpan={1} >
+                                <Image boxSize="280px" src={`https://image.tmdb.org/t/p/w185${targetId.poster_path}`} />
+                            </GridItem>
+                            <GridItem colSpan={4}>
+                                {targetId !== '' && <Text fontSize="2xl" textAling="center" mb={5} color="yellow" ><strong>{targetId !== '' && targetId.title}</strong></Text>}
+                                {targetId !== '' && <Text fontSize="xl" color="white" ><strong>{targetId.overview}</strong></Text>}
+                            </GridItem>
+                        </Grid>
                     </ModalBody>
+                    <ModalFooter mt={10} >
 
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Link to={`/movie/${targetId.id}`}><Button variant="ghost">Secondary Action</Button></Link>
+                        <Link to={`/movie/${targetId.id}`}><button className="btn btn-lg btn-warning" onClick={onClose}>VER AHORA</button></Link>
+                        <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark ms-3" >VER DESPUES</button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-            <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            {/* <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-centered ">
                     <div className="modal-content bg-transparent border-0">
                         <div className="modal-header border-bottom-0">
@@ -217,19 +201,19 @@ const ListMovies = () => {
                             </div>
                         </div>
                         <div className="modal-footer border-top-0">
-                            <Link to={`/movie/${targetId.id}`}><button className="btn btn-lg btn-warning" data-bs-dismiss="modal">VER AHORA</button></Link>
+                            <Link to={`/movie/${targetId.id}`}><button className="btn btn-lg btn-warning" id="btnCloseModal">VER AHORA</button></Link>
                             <button onClick={handleClick} className="btn btn-lg btn-outline-warning bg-dark" >VER DESPUES</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
             <div className="d-flex flex-wrap justify-content-around mt-5 mb-5">
                 {isLoading ? <h1>Cargando.......</h1>
                     :
                     (list.map(datos =>
-                    (<div className="p-3" key={datos.idDb}><CardDiv type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                    (<div className="p-3" key={datos.idDb}><CardDiv type="button" onClick={onOpen} >
                         <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
                         <Overlay>
                             <Img src="https://i.imgur.com/GHZrOvx.png" />
@@ -246,8 +230,8 @@ const ListMovies = () => {
 
             <div className="row">
                 <div className="col-12 text-center">
-                    <div ref={setElement} class="spinner-border text-warning" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div ref={setElement} className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,11 @@
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
+import Swal from "sweetalert2"
 import { db } from "../firebase/config"
 
 export const useVerify = (initialState = {}) => {
     const [state, setstate] = useState(initialState)
+    const history = useHistory();
 
     const verify = (idef) => {
         db.collection('movieList')
@@ -14,7 +17,18 @@ export const useVerify = (initialState = {}) => {
                     })
                 })
                 const newDato = dato.find(el => el.idTMDB == idef);
-                newDato ? setstate(newDato) : console.log('No esta la Peli');
+                if(newDato){
+                    setstate(newDato)
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '¡Lo Sentimos!, Esta Pelicula esta en Mantenimiento',
+                        icon: 'error',
+                        confirmButtonText: 'Back'
+                      })
+                    history.push('/')
+                }
+
             })
 
     }

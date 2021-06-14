@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { useVerify } from '../helpers/useVerify'
+import { useVerify } from '../hooks/useVerify'
 
 const Video = styled.video`
     max-width: 100%;
@@ -13,7 +14,8 @@ const H1 = styled.h1`
 
 const ShowMovie = () => {
     const [state, verify] = useVerify();
-    const x = '632357'
+    const {id} = useParams();
+    const x = id
 
     useEffect( () => {
         verify(x)

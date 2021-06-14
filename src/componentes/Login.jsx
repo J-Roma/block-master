@@ -1,15 +1,11 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { startGoogleAuth, startLoginEmailPassword } from '../actions/auth';
 import { useForm } from '../hooks/useForm';
-import Swal from 'sweetalert2'
-import validator from 'validator';
-import { removeError, setError } from '../actions/ui';
-
 
 const Container = styled.div`
 	max-width: 600px;
@@ -24,9 +20,7 @@ const Login = () => {
 	})
 	const {email, password} = formValues;
 
-	const dispatch = useDispatch();
-	const { msjError } = useSelector(state => state.ui);
-	
+	const dispatch = useDispatch();	
 
 	const handleGoogleAuth = () => {
 		//e.preventDefault();

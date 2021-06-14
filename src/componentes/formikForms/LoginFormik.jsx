@@ -1,16 +1,12 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { startGoogleAuth, startLoginEmailPassword } from '../actions/auth';
+import { startGoogleAuth, startLoginEmailPassword } from '../../actions/auth';
 import { useFormik } from 'formik';
-import { useForm } from '../hooks/useForm';
-import Swal from 'sweetalert2'
-import validator from 'validator';
-import { removeError, setError } from '../actions/ui';
-
+import { useForm } from '../../hooks/useForm';
 
 const Container = styled.div`
 	max-width: 600px;

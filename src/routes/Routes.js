@@ -20,15 +20,12 @@ import { PrivateRoute } from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Favorites from '../componentes/Favorites';
 import ControlPanel from '../componentes/ControlPanel';
-import LoginFormik from '../componentes/LoginFormik';
-import RegisterFormik from '../componentes/RegisterFormik';
 import ShowMovie from '../componentes/ShowMovie';
 
 const Routes = () => {
     const [cheking, setChecking] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const dispatch = useDispatch();
-
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
             if (user?.uid) {
@@ -50,7 +47,6 @@ const Routes = () => {
             <Navbar isLoggedIn={isLoggedIn} />
             <Switch>
                 <Route exact path="/" component={Mains} />
-                <Route exact path="/register" component={Register} />
                 <Route exact path="/top-raiting" component={TopRaiting} />
                 <Route exact path="/low-raiting" component={LowRaiting} />
 
@@ -58,6 +54,13 @@ const Routes = () => {
                     exact
                     path="/login"
                     component={Login}
+                    isLoggedIn={isLoggedIn}
+                />
+
+                <PublicRoute
+                    exact
+                    path="/register"
+                    component={Register}
                     isLoggedIn={isLoggedIn}
                 />
 

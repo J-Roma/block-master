@@ -66,8 +66,9 @@ const Img = styled.img`
 `
 
 const Favorites = () => {
-  const dispatch = useDispatch();
   const uid = useSelector(state => state.auth.uid)
+
+  const dispatch = useDispatch();
   const pintar = useSelector(state => state.crud.verdespues)
 
   const handleLogout = () => {
@@ -112,13 +113,7 @@ const Favorites = () => {
             <li className="nav-item mb-2">
               <Link to="/account/favorites" className="nav-link active">Favoritos</Link>
             </li>
-            {
-              uid === 'EPYaaSs52oSNbuEIIYvpf3THi5T2' && (
-                <li className="nav-item mb-2">
-                  <Link to="/account/controlpanel" className="nav-link">Panel de Control</Link>
-                </li>
-              )
-            }
+
             <li className="nav-item mb-2">
               <button onClick={handleLogout} className="btn btn-danger ms-3" type="button">Cerrar Sesion</button>
             </li>

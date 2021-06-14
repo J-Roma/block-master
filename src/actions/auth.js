@@ -3,6 +3,19 @@ import { firebase, googleAuthProvider } from "../firebase/config"
 import { startLoading, finishLoading } from "../actions/ui"
 import Swal from 'sweetalert2'
 
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
 export const login = (uid, displayName) => ({
     type: types.login,
     payload: {
@@ -20,6 +33,10 @@ export const startGoogleAuth = () => {
         firebase.auth().signInWithPopup(googleAuthProvider)
             .then(({ user }) => {
                 dispatch(login(user.uid, user.displayName));
+                Toast.fire({
+                    icon: 'success',
+                    title: '¡Inicio de Sesion exitoso!'
+                  })
             })
 
     }
@@ -39,6 +56,10 @@ export const startLoginEmailPassword = (email, password) => {
             .then(({ user }) => {
                 dispatch(startLoading)
                 dispatch(login(user.uid, user.displayName));
+                Toast.fire({
+                    icon: 'success',
+                    title: '¡Inicio de Sesion exitoso!'
+                  })
             })
             .catch(e => {
                 dispatch(finishLoading)
@@ -65,11 +86,20 @@ export const startRegisterWithEmailPasswordName = (email, password, name) => {
                 dispatch(
                     login(user.uid, user.displayName)
                 );
-                console.log(user)
+                Toast.fire({
+                    icon: 'success',
+                    title: '¡Inicio de Sesion exitoso!'
+                  })
             })
             .catch(e => {
-                console.log(e);
-
+                return (
+                    Swal.fire({
+                        title: 'Error!',
+                        text: e,
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                      })
+                )
             })
 
     }

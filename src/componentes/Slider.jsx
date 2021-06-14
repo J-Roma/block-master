@@ -23,7 +23,7 @@ const Slider = () => {
                         <img src="https://i.imgur.com/3iZc07Z.png" className="d-block w-100" alt="..." />
                         <div className="container">
                             <div className="carousel-caption text-start">
-                            <p><Link to="/" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} />VER AHORA</Link>
+                            <p><Link to="/movie/15132" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} />VER AHORA</Link>
                              <Link to="/" className="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlus} />VER DESPUES</Link></p>
                             </div>
                         </div>
@@ -32,7 +32,7 @@ const Slider = () => {
                         <img src="https://i.imgur.com/RGyjnLe.png" className="d-block w-100" alt="..." />
                         <div className="container">
                             <div className="carousel-caption text-start">
-                            <p><Link to="/" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</Link>
+                            <p><Link to="/movie/15132" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</Link>
                              <Link to="/" className="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlus} />VER DESPUES</Link></p>
                             </div>
                         </div>
@@ -42,7 +42,7 @@ const Slider = () => {
 
                         <div className="container">
                             <div className="carousel-caption text-start">
-                                <p><Link to="/" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</Link>
+                                <p><Link to="/movie/15132" className="btn btn-lg btn-warning me-2" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} /> VER AHORA</Link>
                                  <Link to="/" className="btn btn-lg btn-outline-warning bg-dark" href="#"><FontAwesomeIcon className="me-2" icon={faPlay} />VER DESPUES</Link></p>
                             </div>
                         </div>

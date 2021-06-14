@@ -1,15 +1,10 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import validator from 'validator'
-import { useForm } from '../hooks/useForm'
+import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
-import { setError, removeError } from '../actions/ui'
-import { startRegisterWithEmailPasswordName } from '../actions/auth'
+import { startRegisterWithEmailPasswordName } from '../../actions/auth'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faUserCircle, faPlus, faPlay } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2'
+import { useDispatch } from 'react-redux'
+
 
 const validate = values => {
 	const errors = {};
