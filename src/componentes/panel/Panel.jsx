@@ -23,20 +23,29 @@ const Panel = () => {
     const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1/romajs/auto/upload'
     const CLOUDINARY_UPLOAD_PRESET = 'htam81et'
 
-    const handleIdName = (e) => {
+    const handleSetData = (e) => {
         const movie = e.target.value.split('|')
-        console.log(movie);
+        //console.log(movie);
         const data = [];
         movie.forEach(el => {
             let temp = el.replace(' ', '')
             data.push(temp)
         })
-        console.log(data);
-        setUploadedMovies({
-            ...uploadedMovies,
-            idTMDB: data[0],
-            name: data[1]
-        })
+        const temporal = movieList.find(movie => movie.id == data[0])
+        //temporal = temporal.find(movie => movie.id === '423108')
+        if (temporal){
+
+            setUploadedMovies({
+                ...uploadedMovies,
+                idTMDB: temporal.id,
+                name: temporal.title,
+                img: `https://image.tmdb.org/t/p/w185${temporal.poster_path}`,
+                description: temporal.overview,
+                date: temporal.release_date,
+                overRate: temporal.vote_average,
+            })
+
+        }
     }
 
     const handleSubmitUploadVideos = async () => {
@@ -55,32 +64,52 @@ const Panel = () => {
             },
             data: formData
         })
-            .then(res => {
-                console.log(res.data.secure_url)
-                setUploadedMovies({
-                    ...uploadedMovies,
-                    src: `${res.data.secure_url}`
-                })
-                seturl(res.data.secure_url)
-            }).catch(err => {
-                console.log(err);
+        .then(res => {
+             console.log(res.data.secure_url)
+            setUploadedMovies({
+                ...uploadedMovies,
+                src: `${res.data.secure_url}`
             })
+            seturl(res.data.secure_url)
+        }).catch(err => {
+               console.log(err);
+        })
     }
 
     const handleName = (e) => {
         console.log(e.target.value );
+        setUploadedMovies({
+            ...uploadedMovies,
+            name: e.target.value
+        })
     }
     const handleImg = (e) => {
         console.log(e.target.value);
+        setUploadedMovies({
+            ...uploadedMovies,
+            img: e.target.value
+        })
     }
     const handleDate= (e) => {
         console.log(e.target.value);
+        setUploadedMovies({
+            ...uploadedMovies,
+            date: e.target.value
+        })
     }
     const handleOverRate = (e) => {
         console.log(e.target.value);
+        setUploadedMovies({
+            ...uploadedMovies,
+            overRate: e.target.value
+        })
     }
     const handleDescription = (e) => {
         console.log(e.target.value);
+        setUploadedMovies({
+            ...uploadedMovies,
+            description: e.target.value
+        })
     }
 
     useEffect(() => {
@@ -91,7 +120,7 @@ const Panel = () => {
         <div>
             <h3 className="text-center p-3 text-warning fs-1">Añadir Peliculas</h3>
             <label for="exampleDataList" className="form-label text-white fs-5">Que Pelicula quieres Añadir:</label>
-            <input className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
+            <input onChange={handleSetData} className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
             <datalist id="datalistOptions">
                 {
                     movieList.map(movie => <option value={`${movie.id} | ${movie.title}`} />)
@@ -112,36 +141,36 @@ const Panel = () => {
                     <tbody>
                         <tr>
                             <th scope="row">ID</th>
-                            <td colspan="1"></td>
+                            <td colSpan="1">{uploadedMovies.idTMDB}</td>
                         </tr>
                         <tr>
                             <th scope="row">Nombre</th>
-                            <td colspan="1">
-                                <input onClick={handleName} class="form-control form-control-sm" type="text" />
+                            <td colSpan="1">
+                                <input onChange={handleName} class="form-control form-control-sm" type="text" defaultValue={uploadedMovies.name} />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">imgUrl</th>
-                            <td colspan="1">
-                                <input onClick={handleImg} class="form-control form-control-sm" type="text" />
+                            <td colSpan="1">
+                                <input onChange={handleImg} class="form-control form-control-sm" type="text" defaultValue={uploadedMovies.img} />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Fecha de Estreno</th>
-                            <td colspan="1">
-                                <input onClick={handleDate} class="form-control form-control-sm" type="text" />
+                            <td colSpan="1">
+                                <input onChange={handleDate} class="form-control form-control-sm" type="text" defaultValue={uploadedMovies.date}/>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Puntaje</th>
-                            <td colspan="1">
-                                <input onClick={handleOverRate} class="form-control form-control-sm" type="text" />
+                            <td colSpan="1">
+                                <input onChange={handleOverRate} class="form-control form-control-sm" type="text" defaultValue={uploadedMovies.overRate} />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Descripcion</th>
-                            <td colspan="1">
-                                <textarea onClick={handleDescription} class="form-control" id="description" rows="3"></textarea>
+                            <td colSpan="1">
+                                <textarea onChange={handleDescription} type="text" class="form-control" id="description" rows="3" defaultValue={uploadedMovies.description}></textarea>
                             </td>
                         </tr>
                     </tbody>
