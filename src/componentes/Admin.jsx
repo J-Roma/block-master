@@ -3,20 +3,13 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux';
 import { startGoogleLogout } from '../actions/auth';
 import { Link } from 'react-router-dom';
+import Account from './user/Account';
 
 const AdminContainer = styled.div`
   background-image: url('https://res.cloudinary.com/romajs/image/upload/v1623621846/1773899_mobibo.jpg');
   border: #FED941 5px solid;
   border-radius: 15px;
   height: 70vh;
-`
-const Profile = styled.div`
-  margin: 0 auto;
-`
-
-const Img = styled.img`
-  width: 150px;
-  height: 150px;
 `
 
 const Admin = () => {
@@ -52,14 +45,7 @@ const Admin = () => {
           </ul>
         </div>
         <div className="col-10 ">
-            <div className="row">
-              <Profile className="col-12">
-                <Img className="rounded rounded-circle " src="https://www.seekpng.com/png/small/3-39236_anime-boy-png-transparent-picture-anime-boy-png.png" alt="afx" />
-              </Profile>
-              <div className="col-12 text-start">
-                <h1>Hola</h1>
-              </div>
-            </div>
+            <Account/> 
         </div>
       </div>
 

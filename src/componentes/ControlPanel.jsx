@@ -6,7 +6,6 @@ import { startGoogleLogout } from '../actions/auth'
 import Panel from './panel/Panel'
 
 const AdminContainer = styled.div`
-  height: 70vh;
   background-image: url('https://res.cloudinary.com/romajs/image/upload/v1623621846/1773899_mobibo.jpg');
   border: #FED941 5px solid;
   border-radius: 15px;

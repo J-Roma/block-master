@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { uploadedMoviesList } from '../../actions/crud'
 
 const Panel = () => {
-    
+
     //Subir info Video a Firebase
     const [uploadedMovies, setUploadedMovies] = useState({
         idTMDB: '',
@@ -23,7 +23,7 @@ const Panel = () => {
         const movie = e.target.value.split('|')
         console.log(movie);
         const data = [];
-        movie.forEach(el => {   
+        movie.forEach(el => {
             let temp = el.replace(' ', '')
             data.push(temp)
         })
@@ -51,20 +51,20 @@ const Panel = () => {
             },
             data: formData
         })
-        .then( res => {
-            console.log(res.data.secure_url)
-            setUploadedMovies({
-                ...uploadedMovies,
-                src: `${res.data.secure_url}`
+            .then(res => {
+                console.log(res.data.secure_url)
+                setUploadedMovies({
+                    ...uploadedMovies,
+                    src: `${res.data.secure_url}`
+                })
+                seturl(res.data.secure_url)
+            }).catch(err => {
+                console.log(err);
             })
-            seturl(res.data.secure_url)
-        }).catch(err => {
-            console.log(err);
-        })
     }
-        
+
     useEffect(() => {
-        url && dispatch(uploadedMoviesList(uploadedMovies))        
+        url && dispatch(uploadedMoviesList(uploadedMovies))
     }, [url])
 
     return (
@@ -74,19 +74,59 @@ const Panel = () => {
             <input onChange={handleIdName} className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
             <datalist id="datalistOptions">
                 {
-                    movieList.map( movie => <option value={`${movie.id} | ${movie.title}`} />)
+                    movieList.map(movie => <option value={`${movie.id} | ${movie.title}`} />)
                 }
-                {/* <option value="San Francisco" />
-                <option value="New York" />
-                <option value="Seattle" />
-                <option value="Los Angeles" />
-                <option value="Chicago" /> */}
             </datalist>
-            <div class="mb-3">
+            <div className="mb-3">
                 <label for="formFileMultiple" class="form-label text-white fs-5 mt-3">Subir archivo...</label>
                 <input onChange={(e) => setFiles(e.target.files[0])} class="form-control form-control-sm" type="file" id="formFileMultiple" multiple />
             </div>
-    
+            <div className="bg-white rounded table-responsive mb-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="col-3">Campo</th>
+                            <th scope="col">Informacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">ID</th>
+                            <td colspan="1"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nombre</th>
+                            <td colspan="1">
+                                <input class="form-control form-control-sm" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">imgUrl</th>
+                            <td colspan="1">
+                                <input class="form-control form-control-sm" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Fecha de Estreno</th>
+                            <td colspan="1">
+                                <input class="form-control form-control-sm" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Puntaje</th>
+                            <td colspan="1">
+                                <input class="form-control form-control-sm" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Descripcion</th>
+                            <td colspan="1">
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div className="text-center">
                 <button onClick={handleSubmitUploadVideos} className="btn btn-warning " type="button">Subir Pelicula</button>
             </div>
