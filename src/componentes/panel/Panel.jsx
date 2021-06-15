@@ -10,6 +10,10 @@ const Panel = () => {
         idTMDB: '',
         name: '',
         src: '',
+        img: '',
+        description: '',
+        date: '',
+        overRate: '',
     })
     const [url, seturl] = useState('')
     const [files, setFiles] = useState("")
@@ -63,6 +67,22 @@ const Panel = () => {
             })
     }
 
+    const handleName = (e) => {
+        console.log(e.target.value );
+    }
+    const handleImg = (e) => {
+        console.log(e.target.value);
+    }
+    const handleDate= (e) => {
+        console.log(e.target.value);
+    }
+    const handleOverRate = (e) => {
+        console.log(e.target.value);
+    }
+    const handleDescription = (e) => {
+        console.log(e.target.value);
+    }
+
     useEffect(() => {
         url && dispatch(uploadedMoviesList(uploadedMovies))
     }, [url])
@@ -71,7 +91,7 @@ const Panel = () => {
         <div>
             <h3 className="text-center p-3 text-warning fs-1">Añadir Peliculas</h3>
             <label for="exampleDataList" className="form-label text-white fs-5">Que Pelicula quieres Añadir:</label>
-            <input onChange={handleIdName} className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
+            <input className="form-control form-control-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
             <datalist id="datalistOptions">
                 {
                     movieList.map(movie => <option value={`${movie.id} | ${movie.title}`} />)
@@ -97,31 +117,31 @@ const Panel = () => {
                         <tr>
                             <th scope="row">Nombre</th>
                             <td colspan="1">
-                                <input class="form-control form-control-sm" type="text" />
+                                <input onClick={handleName} class="form-control form-control-sm" type="text" />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">imgUrl</th>
                             <td colspan="1">
-                                <input class="form-control form-control-sm" type="text" />
+                                <input onClick={handleImg} class="form-control form-control-sm" type="text" />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Fecha de Estreno</th>
                             <td colspan="1">
-                                <input class="form-control form-control-sm" type="text" />
+                                <input onClick={handleDate} class="form-control form-control-sm" type="text" />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Puntaje</th>
                             <td colspan="1">
-                                <input class="form-control form-control-sm" type="text" />
+                                <input onClick={handleOverRate} class="form-control form-control-sm" type="text" />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Descripcion</th>
                             <td colspan="1">
-                                <textarea class="form-control" id="description" rows="3"></textarea>
+                                <textarea onClick={handleDescription} class="form-control" id="description" rows="3"></textarea>
                             </td>
                         </tr>
                     </tbody>
