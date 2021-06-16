@@ -21,6 +21,7 @@ import PublicRoute from './PublicRoute';
 import Favorites from '../componentes/Favorites';
 import ControlPanel from '../componentes/ControlPanel';
 import ShowMovie from '../componentes/ShowMovie';
+import Search from '../componentes/Search';
 
 const Routes = () => {
     const [cheking, setChecking] = useState(true);
@@ -49,6 +50,7 @@ const Routes = () => {
                 <Route exact path="/" component={Mains} />
                 <Route exact path="/top-raiting" component={TopRaiting} />
                 <Route exact path="/low-raiting" component={LowRaiting} />
+                <Route exact path="/search/:id" component={Search} />
 
                 <PublicRoute
                     exact

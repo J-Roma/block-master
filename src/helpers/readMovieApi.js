@@ -1,6 +1,4 @@
 import axios from "axios"
-//import { useDispatch } from "react-redux";
-//import { moviesAction } from "../actions/movies";
 
 //import { useState } from "react"
 
@@ -19,3 +17,13 @@ const readMovieApi = () => {
 
 export default readMovieApi
 
+export const readMovieApi = (movie) => {
+    const searchingMovie = []
+
+    axios.get(`http://api.themoviedb.org/3/search/movie?api_key=ed4ef444cf09035de37c391527885e55&language=es&query=${movie}`)
+        .then(datos => {
+            searchingMovie.push(...dato)
+            console.log(searchingMovie)
+        })
+    return (alert('Ok'))
+}

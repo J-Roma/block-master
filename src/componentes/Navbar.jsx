@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // import axios from "axios"
 // import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ const Icon = styled.div`
 `
 
 const Navbar = ({isLoggedIn}) => {
-
+    const [searchMovie, setSearchMovie] = useState("")
     // const dispatch = useDispatch()
     // useEffect(() => {
     //     axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=ed4ef444cf09035de37c391527885e55&language=es')
@@ -26,6 +26,12 @@ const Navbar = ({isLoggedIn}) => {
     //             console.log(e);
     //         })
     // }, [])
+
+    const handleChange = (e) => {
+        console.log(e.target.value);
+        const movie = e.target.value;
+        setSearchMovie(movie); 
+    } 
 
     return (
         <div className="d-flex justify-content-center">
@@ -49,12 +55,12 @@ const Navbar = ({isLoggedIn}) => {
                                 </Link>
                             </li>
                         </ul>
-                        <form className="d-flex ms-5">
+                        <div className="d-flex ms-5">
                             <div className="input-group">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                            <button className="btn btn-warning" type="submit">Search</button>
+                            <input onChange={handleChange} className="form-control me-2" type="search" placeholder="Search" aria-label="¿Que pelicula Estas Buscando?"/>
+                            <Link to={`/search/${searchMovie}`}><button className="btn btn-warning" type="button">Buscar</button></Link>
                             </div>
-                        </form>
+                        </div>
                         {
                             isLoggedIn ? <Link to="/account"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
                             : <Link to="/login"><Icon><FontAwesomeIcon className="fs-2 ms-5" icon={faUserCircle} /></Icon></Link>
