@@ -6,7 +6,7 @@ const Img = styled.img`
     max-width: 390px;
     height: 399px;
 `
-//http://api.themoviedb.org/3/search/movie?api_key=###&query=fight+club
+//http://api.themoviedb.org/3/search/movie?api_key=###&query={Rapidos y furiosos}
 const StandbyState = () => {
 
 	return (
