@@ -61,7 +61,8 @@ const Img = styled.img`
 `
 const CardMovies = (props) => {
 
-    const [container, setContainer] = useState('')
+    const intialState = props.list
+    const [container, setContainer] = useState(intialState)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isLoading, setIsLoading] = useState(true);
     const [targetId, setTargetId] = useState('');
@@ -83,11 +84,11 @@ const CardMovies = (props) => {
         let content = container.find(dato => dato.id == e.target.id)
         setTargetId(content)
     }
+    useEffect(() => {
+        console.log(container);
+        container.length >= 2 && setIsLoading(false)    
+    }, [container])
 
-    useEffect(async () => {
-        await setContainer(props.list)
-        setIsLoading(false)
-    }, [props.list])
 
 
 
@@ -125,9 +126,9 @@ const CardMovies = (props) => {
             </Modal>
 
             <div className="d-flex flex-wrap justify-content-around mt-5 mb-5">
-                {isLoading ? <h1>Cargando.......</h1>
+                {isLoading ? <h1 className="text-warning"> Cargando.......</h1>
                     :
-                    (container.map(datos =>
+                    (props.list.map(datos =>
                     (<div className="p-3" key={datos.id}><CardDiv type="button" onClick={onOpen} >
                         <Img id={datos.id} onClick={handleInfo} src={`https://image.tmdb.org/t/p/w185${datos.poster_path}`} />
                         <Overlay>

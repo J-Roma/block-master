@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-
+import {uid} from 'react-uid';
 import { useDispatch, useSelector } from "react-redux";
 import { load } from "../actions/movies";
 import { addMovies } from "../actions/crud"

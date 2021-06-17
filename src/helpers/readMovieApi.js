@@ -12,9 +12,7 @@ export const readMovieApi = (movie) => {
             total.forEach( hijo => {
                 searchingMovie.push(hijo)
             }
-                
             )
-            console.log(searchingMovie)
         })
         .catch(
             e => console.log(e)

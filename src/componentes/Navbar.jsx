@@ -30,7 +30,7 @@ const Navbar = ({isLoggedIn}) => {
     const handleChange = (e) => {
         console.log(e.target.value);
         const movie = e.target.value;
-        movie = movie.replace(" ", "+")
+        //movie = movie.replace(" ", "+")
 
         setSearchMovie(movie); 
     } 
